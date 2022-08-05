@@ -9,6 +9,7 @@ const router = express.Router();
 
 //CREATE
 router.post('/', verifyToken, async (req, res) => {
+  console.log('route',req.body)
   const newCart = new Cart(req.body);
   try {
     const savedCart = await newCart.save();
@@ -20,6 +21,7 @@ router.post('/', verifyToken, async (req, res) => {
 
 //UPDATE
 router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
+  console.log(req.params.id, req.body)
   try {
     const updatedCart = await Cart.findByIdAndUpdate(
       req.params.id,
@@ -28,6 +30,7 @@ router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
       },
       { new: true }
     );
+    console.log(updatedCart)
     res.status(200).json(updatedCart);
   } catch (err) {
     res.status(500).json(err);
